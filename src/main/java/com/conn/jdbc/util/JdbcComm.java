@@ -10,28 +10,32 @@ import java.sql.Statement;
 import com.po.HttpRequester;
 import com.po.HttpRespons;
 
-
-
 public class JdbcComm {
- 
-	public static void main(String[] args){
-		int start = 0 ;
-		int end = 0;
-		for(int i=0;i<10;i++){ 
-		
-			if(i==0){
-				start=0;
-				end = i+1*100000;
-			}else{
-				end = i*100000;
-			}
-			MyThread myThread = new MyThread(start, end);
-			myThread.start();
-			start=i*10000;
-			
+
+	public static final String url = "jdbc:mysql://127.0.0.1/alexa";
+	public static final String name = "com.mysql.jdbc.Driver";
+	public static final String user = "root";
+	public static final String password = "840803xxxx";
+	public static Connection conn = null;
+	public static Statement sm = null;
+
+	public  Connection getConn() {
+		try {
+			conn = DriverManager.getConnection(url, user, password);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
 		}
+		return conn;
 	}
 
-	 
+	public   void closed() {
+		try {
+			conn.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+	}
 
 }

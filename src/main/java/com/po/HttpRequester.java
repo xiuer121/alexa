@@ -25,8 +25,8 @@ public class HttpRequester {
 	     * @return 响应对象 
 	     * @throws IOException 
 	     */  
-	    public HttpRespons sendGet(String urlString) throws IOException {  
-	        return this.send(urlString, "GET", null, null);  
+	    public void sendGet(String urlString) throws IOException {  
+//	        return this.send(urlString, "GET", null, null);  
 	    }  
 	   
 	    /** 
@@ -39,9 +39,9 @@ public class HttpRequester {
 	     * @return 响应对象 
 	     * @throws IOException 
 	     */  
-	    public HttpRespons sendGet(String urlString, Map<String, String> params)  
+	    public void sendGet(String urlString, Map<String, String> params)  
 	            throws IOException {  
-	        return this.send(urlString, "GET", params, null);  
+//	        return this.send(urlString, "GET", params, null);  
 	    }  
 	   
 	    /** 
@@ -56,9 +56,9 @@ public class HttpRequester {
 	     * @return 响应对象 
 	     * @throws IOException 
 	     */  
-	    public HttpRespons sendGet(String urlString, Map<String, String> params,  
+	    public void sendGet(String urlString, Map<String, String> params,  
 	            Map<String, String> propertys) throws IOException {  
-	        return this.send(urlString, "GET", params, propertys);  
+//	        return this.send(urlString, "GET", params, propertys);  
 	    }  
 	   
 	    /** 
@@ -69,8 +69,8 @@ public class HttpRequester {
 	     * @return 响应对象 
 	     * @throws IOException 
 	     */  
-	    public HttpRespons sendPost(String urlString) throws IOException {  
-	        return this.send(urlString, "POST", null, null);  
+	    public void sendPost(String urlString) throws IOException {  
+//	        return this.send(urlString, "POST", null, null);  
 	    }  
 	   
 	    /** 
@@ -83,9 +83,9 @@ public class HttpRequester {
 	     * @return 响应对象 
 	     * @throws IOException 
 	     */  
-	    public HttpRespons sendPost(String urlString, Map<String, String> params)  
+	    public void sendPost(String urlString, Map<String, String> params)  
 	            throws IOException {  
-	        return this.send(urlString, "POST", params, null);  
+//	        return this.send(urlString, "POST", params, null);  
 	    }  
 	   
 	    /** 
@@ -100,9 +100,9 @@ public class HttpRequester {
 	     * @return 响应对象 
 	     * @throws IOException 
 	     */  
-	    public HttpRespons sendPost(String urlString, Map<String, String> params,  
+	    public void sendPost(String urlString, Map<String, String> params,  
 	            Map<String, String> propertys) throws IOException {  
-	        return this.send(urlString, "POST", params, propertys);  
+//	        return this.send(urlString, "POST", params, propertys);  
 	    }  
 	   
 	    /** 
@@ -112,7 +112,7 @@ public class HttpRequester {
 	     * @return 响映对象 
 	     * @throws IOException 
 	     */  
-	    private HttpRespons send(String urlString, String method,  
+	    private void send(String urlString, String method,  
 	            Map<String, String> parameters, Map<String, String> propertys)  
 	            throws IOException {  
 	        HttpURLConnection urlConnection = null;  
@@ -136,7 +136,11 @@ public class HttpRequester {
 	        urlConnection = (HttpURLConnection) url.openConnection();  
 	        urlConnection.setConnectTimeout(10000);
 	        urlConnection.setReadTimeout(10000);
-	        System.out.println("code:"+urlConnection.getResponseCode());
+	        if("200".equals(urlConnection.getResponseCode())){
+	            System.out.println("code:"+urlConnection.getResponseCode());
+	            System.out.println("code:"+urlConnection.getURL());
+	        }
+	    
 	        if(urlConnection.getRequestMethod() ==null){
 	        	urlConnection.setRequestMethod(method); 
 		        
@@ -162,7 +166,7 @@ public class HttpRequester {
 	            urlConnection.getOutputStream().close();  
 	        }  
 	   
-	        return this.makeContent(urlString, urlConnection);  
+//	        return this.makeContent(urlString, urlConnection);  
 	    }  
 	   
 	    /** 

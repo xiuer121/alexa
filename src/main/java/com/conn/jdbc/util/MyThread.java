@@ -7,14 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.po.HttpRequest;
 import com.po.HttpRequester;
 import com.po.HttpRespons;
 
 public class MyThread extends Thread {
-	public static final String url = "jdbc:mysql://127.0.0.1/alexa";
-	public static final String name = "com.mysql.jdbc.Driver";
-	public static final String user = "root";
-	public static final String password = "123456";
+//	public static final String url = "jdbc:mysql://127.0.0.1/alexa";
+//	public static final String name = "com.mysql.jdbc.Driver";
+//	public static final String user = "root";
+//	public static final String password = "840803xxxx";
 	public static Connection conn = null;
 	public static Statement sm = null;
 
@@ -32,8 +33,10 @@ public class MyThread extends Thread {
 	public void run() {
 
 		try {
-			Class.forName(name);
-			conn = DriverManager.getConnection(url, user, password);// 获取连接
+//			Class.forName(name);
+//			conn = DriverManager.getConnection(url, user, password);// 获取连接
+			JdbcComm jdbc = new JdbcComm();
+			conn  = jdbc.getConn();
 			sm = conn.createStatement();
 			String sql = " select site_url from top_millions limit " + start
 					+ "," + end;
@@ -41,12 +44,12 @@ public class MyThread extends Thread {
 			ResultSet rs = sm.executeQuery(sql);
 			while (rs.next()) {
 				HttpRequester request = new HttpRequester();
-				HttpRespons hr;
+//				HttpRespons hr;
 				try {
-					System.out.println(rs.getString("site_url"));
-					hr = request.sendGet("http://" + rs.getString("site_url"));
-					System.out.println(hr.getUrlString());
-				} catch (IOException e) {
+//					 request.sendGet("http://" + rs.getString("site_url")+"/do/reg.php");
+				HttpRequest.sendGet("http://" + rs.getString("site_url"),null);
+			
+				} catch (Exception e) {
 
 					e.printStackTrace();
 				}
